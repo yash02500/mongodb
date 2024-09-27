@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Appointment Booking</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       <strong><a class="navbar-brand" href="#" style="font-family:Cambria; font-size:x-large;">Devs Salon</a></strong>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active mr-4">
+                    <a class="nav-link" href="index.html"><i class="fa-solid fa-house fa-lg"></i></a>
+                </li>
+                <li class="nav-item mr-4">
+                    <a class="nav-link" href="#" id="profileIcon"><i class="fa-regular fa-user fa-lg"></i></a>
+                </li>
+                <li class="nav-item mr-4">
+                    <a class="nav-link" onclick="logout()"><i class="fa-solid fa-right-from-bracket fa-lg"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="header-text text-center">
+            <h2 class="mt-5">Book Your Appointment</h2>
+            <p>Select a service to view available slots and book an appointment.</p>
+        </div>
+
+        <!-- Service Selection -->
+        <div class="row">
+        </div>
+
+        <!-- Slots container-->
+        <div class="container" id="slotsContainer">
+        </div>
+
+
+        <!-- Available Slots Modal -->
+        <div class="modal fade" id="slotsModal" tabindex="-1" role="dialog" aria-labelledby="slotsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="slotsModalLabel">Available Slots <span id="serviceName"></span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="availableSlots" class="text-center">
+                            <!-- Available slots will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Profile Management</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- User Profile Section -->
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="profileName">Name</label>
+                        <input type="text" class="form-control" id="profileName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileEmail">Email</label>
+                        <input type="email" class="form-control" id="profileEmail" readonly>
+                    </div>
+                </form>
+
+                <!-- User Appointments Section -->
+                <div id="userAppointments">
+                    <h5>Your Appointments</h5>
+                    <ul class="list-group" id="appointmentsList">
+                        <!-- Appointments will be dynamically inserted here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
+
+
+
+
+

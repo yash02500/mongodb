@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css" />
+  <style>
+    body {
+      padding-top: 50px;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 1200px;
+    }
+
+    .card-header {
+      background-color: #343a40;
+      color: white;
+    }
+
+    .btn-custom {
+      background-color: #343a40;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Admin Dashboard Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Admin Dashboard</h2>
+      <button class="btn btn-custom" id="logout" onclick="adminLogout()">Logout</button>
+    </div>
+
+    <!-- Tabs for Admin Sections -->
+    <ul class="nav nav-tabs mb-4" id="adminTabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="services-tab" data-toggle="tab" href="#services" role="tab"
+          aria-controls="services" aria-selected="true">Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users"
+          aria-selected="false">User Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="appointments-tab" data-toggle="tab" href="#appointments" role="tab"
+          aria-controls="appointments" aria-selected="false">Appointment Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="slots-tab" data-toggle="tab" href="#slots" role="tab" aria-controls="slots"
+          aria-selected="false">Manage Slots</a>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="adminTabsContent">
+
+      <!-- Services Section -->
+      <div class="tab-pane fade show active" id="services" role="tabpanel" aria-labelledby="services-tab">
+        <div class="card mb-4">
+          <div class="card-header">Manage Services</div>
+          <div class="card-body">
+            <!-- Service Form -->
+            <form id="serviceForm" class="mb-4">
+              <div class="form-row">
+                <div class="col">
+                  <input type="text" class="form-control" id="serviceName" placeholder="Service Name">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="serviceDescription" placeholder="Description">
+                </div>
+                <div class="col">
+                  <input type="number" class="form-control" id="serviceDuration" placeholder="Duration (mins)">
+                </div>
+                <div class="col">
+                  <input type="number" class="form-control" id="servicePrice" placeholder="Price ($)">
+                </div>
+                <div class="col">
+                  <button type="button" class="btn btn-primary btn-block" id="addService" onclick="addService()">Add Service</button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Services Table -->
+            <table class="table table-striped" id="servicesTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Duration</th>
+                  <th>Price</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamically filled by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Management Section -->
+      <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+        <div class="card mb-4">
+          <div class="card-header">Manage Users</div>
+          <div class="card-body">
+            <!-- Users Table -->
+            <table class="table table-striped" id="usersTable">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamically filled by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit user -->
+      <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="editUserForm">
+                <div class="form-group">
+                  <label for="userName">Name</label>
+                  <input type="text" class="form-control" id="userName" name="userName">
+                </div>
+                <div class="form-group">
+                  <label for="userEmail">Email</label>
+                  <input type="email" class="form-control" id="userEmail" name="userEmail">
+                </div>
+                <input type="hidden" id="userId" name="userId">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="saveUserChanges(event)">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Appointment Management Section -->
+      <div class="tab-pane fade" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+        <div class="card mb-4">
+          <div class="card-header">Manage Appointments</div>
+          <div class="card-body">
+            <!-- Appointments Table -->
+            <table class="table table-striped" id="appointmentsTable">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>User</th>
+                  <th>Service</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamically filled by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Slots Section -->
+      <div class="tab-pane fade" id="slots" role="tabpanel" aria-labelledby="slots-tab">
+        <div class="card mb-4">
+          <div class="card-header">Manage Slots</div>
+          <div class="card-body">
+            <!-- Slots Form -->
+            <form id="slotForm" class="mb-4">
+              <div class="form-row">
+                <div class="col">
+                  <input type="date" class="form-control" id="slotDate" placeholder="Date">
+                </div>
+                <div class="col">
+                  <input type="time" class="form-control" id="slotTime" placeholder="Time">
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary btn-block" id="addSlot">Add Slot</button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Slots Table -->
+            <table class="table table-striped" id="slotsTable">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Booked Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dynamically filled by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Admin JS -->
+    <script src="js/admin.js"></script>
+</body>
+
+</html>
